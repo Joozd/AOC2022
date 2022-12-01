@@ -1,1 +1,2 @@
-Sample input file
+Sample input file line 1
+Sample input file line 2
