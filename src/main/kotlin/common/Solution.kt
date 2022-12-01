@@ -4,7 +4,7 @@ import java.io.File
 import kotlin.system.measureNanoTime
 
 abstract class Solution(private val day: Int) {
-    protected val inputFile by lazy { inputLines().joinToString("\n") } // to prevent ambiguous newlines. It's always just '\n' this way.
+    protected val inputFile by lazy { inputLines.joinToString("\n") } // to prevent ambiguous newlines. It's always just '\n' this way.
     protected val inputLines by lazy { inputLines() }
 
     abstract fun answer1(): Any?
@@ -25,23 +25,24 @@ abstract class Solution(private val day: Int) {
         val duration2 = measureNanoTime { a2 = answer2() }
         println("2:\n$a2\n\n")
         val durationTotal = preparationDuration +duration1 + duration2
-        println("Preparation: ${preparationDuration/1000000.toFloat()} ms")
-        println("time 1:      ${duration1/1000000.toFloat()} ms")
-        println("time 2:      ${duration2/1000000.toFloat()} ms")
-        println("total time:  ${durationTotal/1000000.toFloat()} ms")
+        println("Preparation: ${preparationDuration/1000000.toDouble()} ms")
+        println("time 1:      ${duration1/1000000.toDouble()} ms")
+        println("time 2:      ${duration2/1000000.toDouble()} ms")
+        println("total time:  ${durationTotal/1000000.toDouble()} ms")
     }
 
     /**
-     * Optional.
      * This will run before answers
      * usually used to read input from file to memory
+     * Standard implementation just initializes lazy values.
      */
     protected open fun prepare(){
-        inputFile   // initialized lazy
-        inputLines  // initialized lazy
+        inputFile  // initialized lazy, this also initializes inputLines as that is called from the lazy init.
     }
 
-    fun inputLines() = readInput().lines()
+    private  fun inputLines() = readInput().lines()
 
+    // private because no protection from ambiguos newLines.
+    // use [inputFile] or [inputLines]
     private fun readInput() = File("inputs\\$day.txt").readText()
 }
