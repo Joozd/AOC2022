@@ -1,2 +1,3 @@
 Sample input file line 1
 Sample input file line 2
+NOTE: Do not share input files on Github in request of AOC

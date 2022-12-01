@@ -4,6 +4,9 @@ import java.io.File
 import kotlin.system.measureNanoTime
 
 abstract class Solution(private val day: Int) {
+    protected val inputFile by lazy { inputLines().joinToString("\n") } // to prevent ambiguous newlines. It's always just '\n' this way.
+    protected val inputLines by lazy { inputLines() }
+
     abstract fun answer1(): Any?
 
     abstract fun answer2(): Any?
@@ -34,10 +37,11 @@ abstract class Solution(private val day: Int) {
      * usually used to read input from file to memory
      */
     protected open fun prepare(){
-
+        inputFile   // initialized lazy
+        inputLines  // initialized lazy
     }
 
     fun inputLines() = readInput().lines()
 
-    fun readInput() = File("inputs\\$day.txt").readText()
+    private fun readInput() = File("inputs\\$day.txt").readText()
 }
