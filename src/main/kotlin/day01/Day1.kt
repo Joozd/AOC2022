@@ -8,21 +8,24 @@ import common.extensions.toInts
  * Times checked by running the function 10K times.
  */
 class Day1: Solution(1) {
-    private val elves by lazy {
-        getBiggestThreeElves()                  // Runs in about 0.028 ms/run
-        //getBiggestThreeElvesReadable()        // runs in about 0.36 ms/run
-    }
+    //caching elves because the same value is used for both answers
+    private var _elves: List<Int>? = null
+    private fun elves(input: List<String>) = _elves ?: getBiggestThreeElves(input).also { _elves = it}
 
-    override fun answer1(): Int = elves.last()
-    override fun answer2(): Any = elves.sum()
+        //getBiggestThreeElves()  runs in about 0.028 ms/run
+        //getBiggestThreeElvesReadable()  runs in about 0.36 ms/run
+
+    // input is ignored, no unit tests for this
+    override fun answer1(input: List<String>) = elves(input).last()
+    override fun answer2(input: List<String>) = elves(input).sum()
 
 
     /**
      * Alternative answer, easier to read and understand but slower by a factor 10+
      */
     @Suppress("unused")
-    private fun getBiggestThreeElvesReadable(): List<Int> =
-        inputFile.split("\n\n")    // split input per elf
+    private fun getBiggestThreeElvesReadable(input: List<String>): List<Int> =
+        inputAsOne(input).split("\n\n")    // split input per elf
             .map {
                 it.lines().toInts()         // change elves' string to ints
                     .sum()                      // just total weight
@@ -33,7 +36,7 @@ class Day1: Solution(1) {
     /**
      * Optimized answer, only calculate top 3 elves. Only touch each line once.
      */
-    private fun getBiggestThreeElves(): List<Int> {
+    private fun getBiggestThreeElves(inputLines: List<String>): List<Int> {
         val elves = mutableListOf(0,0,0) // MutableList is faster than IntArray (not sure why, compiler optimized?)
         var currentElf = 0
 
