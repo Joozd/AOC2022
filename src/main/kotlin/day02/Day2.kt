@@ -11,10 +11,10 @@ import common.Solution
 /*
  * * GAME EXPLANATION *
  *
- * an RPS game is won by the player whose value is 1 higher than the other, so it is lost by the player who is 2 lower.
+ * an RPS game is won by the player whose value is 1 higher than the other.
  * Same value means a draw.
  * Since the game is a circle, we can just do mod(3) and this will work for all values.
- * All comments assume mod(3) for all game-related values. (so 1 also means 4)
+ * All comments assume mod(3) for all game-related values. (so 1 also means 4 and 1 higher equals 2 lower)
  */
 class Day2: Solution(2) {
     override fun answer1(input: List<String>) = input.sumOf{ score(it) }
