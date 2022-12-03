@@ -2,7 +2,7 @@ import day02.Day2
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class Test {
+class TestDay2 {
     @Test
     fun test(){
         val s = Day2()
