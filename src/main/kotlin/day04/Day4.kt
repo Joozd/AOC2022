@@ -3,23 +3,22 @@ package day04
 import common.Solution
 
 /*
- * Some optimization might come from not making IntRanges but I think they really help with readability.
- * Not even sure about that, as it needs SOME collection, maybe a pair is faster?
- * A pair will need extra code though and IMHO pairs are evil and make everything way too unreadable.
- * Biggest gains would be not jumping functions but just doing it all in one line.
+ * Some optimization might come from not making IntRanges but I think they really helps with readability.
+ * Just making 4 ints will probably be the fastest, might implement that later.
+ * Current runtimes: About 0.16ms-0.18ms / answer for both answers
  */
 class Day4: Solution(4) {
     override fun answer1(input: List<String>) = input.count { oneIsInTheOther(it) }
 
     override fun answer2(input: List<String>) = input.count { isOverlapping(it) }
 
-    //runs in about 0.18 ms
+    //runs in about 0.16-0.18 ms
     private fun oneIsInTheOther(line: String): Boolean{
         val pair: List<IntRange> = pairAsIntRanges(line)
         return pair[0] in pair[1] || pair[1] in pair[0]
     }
 
-    //runs in about 0.18 ms
+    //runs in about 0.16-0.18 ms
     private fun isOverlapping(line: String): Boolean{
         val pair: List<IntRange> = pairAsIntRanges(line)
         return pair[0] overlaps pair[1]
