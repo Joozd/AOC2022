@@ -31,12 +31,10 @@ class Day4: Solution(4) {
             ||  numbers[RIGHT_START] <= numbers[LEFT_START] && numbers[LEFT_END] <= numbers[RIGHT_END]
         }
 
-    // runs in about 0.059ms
+    // runs in about 0.057ms
     private fun isOverlappingFaster(line: String) =
         line.grabInts().let { numbers ->
-                numbers[LEFT_START] >= numbers[RIGHT_START] && numbers[LEFT_START] <= numbers[RIGHT_END]  // Left starts in range of Right
-            ||  numbers[LEFT_END] >= numbers[RIGHT_START] && numbers[LEFT_END] <= numbers[RIGHT_END]      // Left ends in range of Right
-            ||  numbers[RIGHT_START] >= numbers[LEFT_START] && numbers[RIGHT_END] <= numbers[LEFT_END]    // Right is fully inside Left (first two lines both include left inside right)
+            numbers[LEFT_START] <= numbers[RIGHT_END] && numbers[RIGHT_START] <= numbers[LEFT_END]
         }
 
     //runs in about 0.062-0.065 ms
