@@ -12,7 +12,7 @@ class TestDay4 {
 
     @Test
     fun benchmark1(){
-        val repeats = 10000
+        val repeats = 100000
         measureNanoTime {
             repeat(repeats){
                 d.answer1()
@@ -29,7 +29,7 @@ class TestDay4 {
 
     @Test
     fun benchmark2(){
-        val repeats = 10000
+        val repeats = 100000
         measureNanoTime {
             repeat(repeats){
                 d.answer2()
