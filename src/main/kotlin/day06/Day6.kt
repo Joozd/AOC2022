@@ -14,6 +14,13 @@ class Day6: Solution(6) {
 
     override fun answer2(input: List<String>) = findMarker(input.first(), 14)
 
+    //One line function for reference. This runs in around 0.10ms / 0.60ms, so about 2.5x and 20x slower.
+    @Suppress("unused")
+    private fun oneLine(line: String, length: Int): Int =
+        (length-1 until line.length).first{ end ->
+            line.substring(end-length+1..end).toSet().size == length
+        } + 1
+
     private fun findMarker(line: String, length: Int): Int{
         var i = length // starts at 1, so length 4 is 1,2,3,4
         while(i < line.length){
@@ -24,7 +31,8 @@ class Day6: Solution(6) {
         return -1
     }
 
-    // Gets the index+1 of the last letter that gets repeated, so in abccd it returns 3 because the third letter (the first c) gets repeated.
+    // Gets the index+1 of the last letter that gets repeated, so in abccd
+    // it returns 3 because the third letter (the first c) gets repeated.
     private fun getFirstInstanceOfLastRepeatingCharacter(line: String, start: Int, end: Int): Int{
         val s = HashSet<Char>()
         (end-1).downTo(start-1).forEach{ i ->
