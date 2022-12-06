@@ -21,6 +21,13 @@ class Day6: Solution(6) {
             line.substring(end-length+1..end).toSet().size == length
         } + 1
 
+    //One line function for reference. Runs slightly slower than the oneLine() version above, but I like the readability.
+    @Suppress("unused")
+    private fun oneLineStolen(line: String, length: Int): Int =
+        line.windowed(length).indexOfFirst {
+            it.toSet().size == length
+        } + length
+
     private fun findMarker(line: String, length: Int): Int{
         var i = length // starts at 1, so length 4 is 1,2,3,4
         while(i < line.length){
