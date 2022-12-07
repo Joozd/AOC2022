@@ -1,4 +1,5 @@
 import common.extensions.grabInts
+import common.extensions.lastWord
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -13,5 +14,21 @@ class StringExtTests {
 
         assertEquals(e1, t1.grabInts())
         assertEquals(e2, t2.grabInts())
+    }
+
+    @Test
+    fun testLastWord(){
+        val t1 = "I am a banana!"
+        val r1 = "banana!"
+
+        val t2 = "noSpace"
+        val r2 = "noSpace"
+
+        val t3 = "tabs are\tignored"
+        val r3 = "are\tignored"
+
+        assertEquals(r1, t1.lastWord())
+        assertEquals(r2, t2.lastWord())
+        assertEquals(r3, t3.lastWord())
     }
 }

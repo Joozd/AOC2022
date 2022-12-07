@@ -16,7 +16,7 @@ fun main() {
             "4" -> day04.Day4().runTimed()
             "5" -> day05.Day5().runTimed()
             "6" -> day06.Day6().runTimed()
-            // "7" -> day07.Day7().runTimed()
+            "7" -> day07.Day7().runTimed()
             // "8" -> day08.Day8().runTimed()
             // "9" -> day09.Day9().runTimed()
             // "10" -> day10.Day10().runTimed()
