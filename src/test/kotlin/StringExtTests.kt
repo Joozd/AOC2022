@@ -1,5 +1,6 @@
 import common.extensions.grabInts
 import common.extensions.lastWord
+import common.extensions.words
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -30,5 +31,12 @@ class StringExtTests {
         assertEquals(r1, t1.lastWord())
         assertEquals(r2, t2.lastWord())
         assertEquals(r3, t3.lastWord())
+    }
+
+    @Test
+    fun wordsTest(){
+        val line = "dit is een zin met woorden. Soms zit er ergens een spatie   te veel."
+        // words() (split on space and discard blank strings) is a bit faster than the regex split() version.
+        assertEquals(line.split("\\s+".toRegex()), line.words())
     }
 }
