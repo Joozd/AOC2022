@@ -7,19 +7,14 @@ import kotlin.test.assertEquals
 class TestDay7 {
     private val d = Day7()
     @Test
-    fun test1(){
+    fun test1() {
         assertEquals<Any?>(a1, d.answer1(t1))
-
-    }
-
-    @Test
-    fun test2(){
-        assertEquals<Any?>(b1, d.answer2(t1))
+        assertEquals<Any?>(b1, d.answer2(t1)) // both in one test because a1 needs to run before a2 for caching
     }
 
     @Test
     fun benchmark1(){
-        val repeats = 1 // 10000
+        val repeats = 100000 // 10000
         measureNanoTime {
             repeat(repeats){
                 d.answer1()
@@ -31,18 +26,41 @@ class TestDay7 {
 
     @Test
     fun benchmark2(){
-        val repeats = 1 // 10000
+        d.answer1() // fill cache
+        val repeats = 100000 // 10000
         measureNanoTime {
             repeat(repeats){
                 d.answer2()
             }
         }.let{
-            println("2: ${String.format("%.3f", it.toDouble()/repeats / 1000000)} ms") // / 1000000 is to go from nanos to millis
+            println("2: ${String.format("%.5f", it.toDouble()/repeats / 1000000)} ms") // / 1000000 is to go from nanos to millis
         }
     }
 
-    val t1= """insert_test_data_here""".lines()
-    val a1 = 42
+    private val t1= """${'$'} cd /
+${'$'} ls
+dir a
+14848514 b.txt
+8504156 c.dat
+dir d
+${'$'} cd a
+${'$'} ls
+dir e
+29116 f
+2557 g
+62596 h.lst
+${'$'} cd e
+${'$'} ls
+584 i
+${'$'} cd ..
+${'$'} cd ..
+${'$'} cd d
+${'$'} ls
+4060174 j
+8033020 d.log
+5626152 d.ext
+7214296 k""".lines()
+    private val a1 = 95437
 
-    val b1 = 42
+    private val b1 = 24933642
 }
