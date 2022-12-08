@@ -9,28 +9,25 @@ import common.grids.Coordinate
  * Scenic score depends on both current value and the values of everything in sight...
  */
 class Day8: Solution(8) {
-    // cache for performance reasons
-    private lateinit var trees: List<List<Int>>
+    // 0.14 ms
+    // Noticed that there is no need to make ints from chars as '0'..'9' increases in the same way as 0..9
+    override fun answer1(input: List<String>): Int =
+        visibleTreesMap(input).sumOf { visibleTrees -> visibleTrees.count { it } }
 
-    override fun answer1(input: List<String>): Int {
-        trees = input.map{ line ->
-            line.map { it.digitToInt() }
-        }
-        return visibleTreesMap().sumOf { it.count { it } }
-    }
 
     // Only looking at the trees found in answer 1 makes this about 4 times faster
     // (and gives the correct answer for my input) but I can imagine situations where that would give the wrong answer
 
     // Cutting the outsides off here instead of checking that in the functions (and removing check from functions)
     // is about 5-10% faster.
-    override fun answer2(input: List<String>) = (1..trees.size - 2).maxOf{ y ->
-        (1..trees[y].size - 2).maxOf { x ->
-            scenicScore(Coordinate(x,y), trees)
+    // current 0.59 ms
+    override fun answer2(input: List<String>) = (1..input.size - 2).maxOf{ y ->
+        (1..input[y].length - 2).maxOf { x ->
+            scenicScore(Coordinate(x,y), input)
         }
     }
 
-    private fun scenicScore(coordinate: Coordinate, trees: List<List<Int>>) =
+    private fun scenicScore(coordinate: Coordinate, trees: List<String>) =
         countTreesToTheLeft(coordinate, trees) *
                 countTreesToTheRight(coordinate, trees) *
                 countTreesToTheNorth(coordinate, trees) *
@@ -38,8 +35,8 @@ class Day8: Solution(8) {
 
 
 
-    private fun visibleTreesMap(): Array<Array<Boolean>>{
-        val visibleTrees = Array(trees.size){ Array(trees[0].size) { false } }
+    private fun visibleTreesMap(trees: List<String>): Array<Array<Boolean>>{
+        val visibleTrees = Array(trees.size){ Array(trees[0].length) { false } }
         for (line in trees.indices){
             treesVisibleFromLeft(line, trees).forEach{ visibleTreeIndex ->
                 visibleTrees[line][visibleTreeIndex] = true
@@ -60,8 +57,8 @@ class Day8: Solution(8) {
     }
 
     //early exit at 9 makes the answer about 15% faster
-    private fun treesVisibleFromLeft(lineIndex: Int, map: List<List<Int>>): List<Int> = buildList{
-        var highest = -1
+    private fun treesVisibleFromLeft(lineIndex: Int, map: List<String>): List<Int> = buildList{
+        var highest = '0' - 1
         for (i in map[lineIndex].indices){
             val n = map[lineIndex][i]
             if (n > highest){
@@ -69,25 +66,25 @@ class Day8: Solution(8) {
                 add(i)
                 highest = n
             }
-            if (n == 9) break
+            if (n == '9') break
         }
     }
 
-    private fun treesVisibleFromRight(lineIndex: Int, map: List<List<Int>>): List<Int> = buildList{
-        var highest = -1
-        for (i in map[lineIndex].size -1 downTo 0){
+    private fun treesVisibleFromRight(lineIndex: Int, map: List<String>): List<Int> = buildList{
+        var highest = '0' - 1
+        for (i in map[lineIndex].length -1 downTo 0){
             val n = map[lineIndex][i]
             if (n > highest){
                 //println("RIGHT: $n($i) is higher than $highest")
                 add(i)
                 highest = n
             }
-            if (n == 9) break
+            if (n == '9') break
         }
     }
 
-    private fun treesVisibleFromTop(columnIndex: Int, map: List<List<Int>>): List<Int> = buildList{
-        var highest = -1
+    private fun treesVisibleFromTop(columnIndex: Int, map: List<String>): List<Int> = buildList{
+        var highest = '0' - 1
         for (i in map.indices){
             val n = map[i][columnIndex]
             if (n > highest){
@@ -95,12 +92,12 @@ class Day8: Solution(8) {
                 add(i)
                 highest = n
             }
-            if (n == 9) break
+            if (n == '9') break
         }
     }
 
-    private fun treesVisibleFromBottom(columnIndex: Int, map: List<List<Int>>): List<Int> = buildList{
-        var highest = -1
+    private fun treesVisibleFromBottom(columnIndex: Int, map: List<String>): List<Int> = buildList{
+        var highest = '0' - 1
         for (i in map.size-1 downTo 0){
             val n = map[i][columnIndex]
             if (n > highest){
@@ -108,11 +105,11 @@ class Day8: Solution(8) {
                 add(i)
                 highest = n
             }
-            if (n == 9) break
+            if (n == '9') break
         }
     }
 
-    private fun countTreesToTheLeft(coordinate: Coordinate, trees: List<List<Int>>): Int{
+    private fun countTreesToTheLeft(coordinate: Coordinate, trees: List<String>): Int{
         var visibleTrees = 0
         for (x in coordinate.x -1 downTo 0){
             visibleTrees++
@@ -123,9 +120,9 @@ class Day8: Solution(8) {
         return visibleTrees
     }
 
-    private fun countTreesToTheRight(coordinate: Coordinate, trees: List<List<Int>>): Int{
+    private fun countTreesToTheRight(coordinate: Coordinate, trees: List<String>): Int{
         var visibleTrees = 0
-        for (x in coordinate.x +1 until trees[0].size){
+        for (x in coordinate.x +1 until trees[0].length){
             visibleTrees++
             if(trees[coordinate.y][x] >= trees[coordinate.y][coordinate.x])
                 return visibleTrees
@@ -134,7 +131,7 @@ class Day8: Solution(8) {
         return visibleTrees
     }
 
-    private fun countTreesToTheNorth(coordinate: Coordinate, trees: List<List<Int>>): Int{
+    private fun countTreesToTheNorth(coordinate: Coordinate, trees: List<String>): Int{
         var visibleTrees = 0
         for (y in coordinate.y -1 downTo 0){
             visibleTrees++
@@ -144,7 +141,7 @@ class Day8: Solution(8) {
         return visibleTrees
     }
 
-    private fun countTreesToTheSouth(coordinate: Coordinate, trees: List<List<Int>>): Int{
+    private fun countTreesToTheSouth(coordinate: Coordinate, trees: List<String>): Int{
         var visibleTrees = 0
         for (y in coordinate.y +1 until trees.size){
             visibleTrees++
