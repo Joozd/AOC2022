@@ -24,10 +24,14 @@ class StringExtTests {
         val t3 = "something-somethingElse 1 yes-no -2 3 banana"
         val e3 = listOf(1,-2,3)
 
+        val t6 = "addx -5"
+        val e6 = listOf(-5)
+
         assertEquals(e0, t0.grabInts())
         assertEquals(e1, t1.grabInts())
         assertEquals(e2, t2.grabInts())
         assertEquals(e3, t3.grabInts())
+        assertEquals(e6, t6.grabInts())
     }
 
     @Test
@@ -50,12 +54,16 @@ class StringExtTests {
         val t5 = "nothing (0) to see here"
         val e5 = 0
 
+        val t6 = "addx -5"
+        val e6 = -5
+
         assertEquals(e0, t0.grabFirstIntOrNull())
         assertEquals(e1, t1.grabFirstIntOrNull())
         assertEquals(e2, t2.grabFirstIntOrNull())
         assertEquals(e3, t3.grabFirstIntOrNull())
         assertEquals(e4, t4.grabFirstIntOrNull())
         assertEquals(e5, t5.grabFirstIntOrNull())
+        assertEquals(e6, t6.grabFirstIntOrNull())
     }
 
     @Test
