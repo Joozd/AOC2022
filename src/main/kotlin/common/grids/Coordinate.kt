@@ -4,6 +4,14 @@ package common.grids
  * because Pairs are too confusing for Joozd
  */
 open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate> {
+    fun north() = Coordinate(x, y-1)
+    fun east() = Coordinate(x+1, y)
+    fun south() = Coordinate(x, y+1)
+    fun west() = Coordinate(x-1, y)
+
+    /*
+    // Functions for when we get to do pathfinding or game of life
+
     fun fourNeighbors() = listOf(
         Coordinate(x, y-1),
         Coordinate(x-1, y),
@@ -29,6 +37,7 @@ open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate> {
                 Coordinate(x,y)
             }
         }.flatten()
+    */
 
     override fun equals(other: Any?) = if (other !is Coordinate) false else
         other.x == x && other.y == y

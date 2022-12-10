@@ -1,3 +1,4 @@
+import common.extensions.grabFirstIntOrNull
 import common.extensions.grabInts
 import common.extensions.lastWord
 import common.extensions.words
@@ -27,6 +28,34 @@ class StringExtTests {
         assertEquals(e1, t1.grabInts())
         assertEquals(e2, t2.grabInts())
         assertEquals(e3, t3.grabInts())
+    }
+
+    @Test
+    fun grabFirstIntOrNull(){
+        val t0 = "123"
+        val e0 = 123
+
+        val t1 = "123 extra text 456"
+        val e1 = 123
+
+        val t2 = "123,456"
+        val e2 = 123
+
+        val t3 = "something something 123"
+        val e3 = 123
+
+        val t4 = "nothing to see here"
+        val e4 = null
+
+        val t5 = "nothing (0) to see here"
+        val e5 = 0
+
+        assertEquals(e0, t0.grabFirstIntOrNull())
+        assertEquals(e1, t1.grabFirstIntOrNull())
+        assertEquals(e2, t2.grabFirstIntOrNull())
+        assertEquals(e3, t3.grabFirstIntOrNull())
+        assertEquals(e4, t4.grabFirstIntOrNull())
+        assertEquals(e5, t5.grabFirstIntOrNull())
     }
 
     @Test

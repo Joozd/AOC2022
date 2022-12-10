@@ -48,7 +48,7 @@ fun String.grabFirstIntOrNull(): Int? {
             else -> current = (current ?: 0) * 10 + c.digitToInt()
         }
     }
-    return null
+    return current
 }
 
 /**
