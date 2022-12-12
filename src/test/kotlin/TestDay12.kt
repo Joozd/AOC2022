@@ -9,6 +9,11 @@ class TestDay12 {
     @Test
     fun test1() {
         assertEquals<Any?>(a1, d.answer1(t1))
+    }
+
+    @Test
+    fun test2() {
+        d.answer1(t1) // fill mountain
         assertEquals<Any?>(b1, d.answer2(t1))
     }
 
@@ -24,6 +29,8 @@ class TestDay12 {
         }
     }
 
+
+
     @Test
     fun benchmark2(){
         d.answer1() // fill caches
@@ -36,6 +43,8 @@ class TestDay12 {
             println("2: ${String.format("%.5f", it.toDouble()/repeats / 1000000)} ms") // / 1000000 is to go from nanos to millis
         }
     }
+
+
 
     private val t1 = """Sabqponm
 abcryxxl

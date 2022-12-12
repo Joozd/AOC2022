@@ -13,3 +13,17 @@ fun Collection<Coordinate>.gridString(): String{
         }
     }
 }
+
+fun List<String>.findFirstPositionOrNull(value: Char): Coordinate? {
+    for (y in this.indices) {
+        for (x in this[y].indices) {
+            if (this[y][x] == value)
+                return Coordinate(x, y)
+        }
+    }
+    return null
+}
+
+operator fun List<String>.get(position: Coordinate) = this[position.y][position.x]
+
+operator fun List<String>.contains(position: Coordinate) = position.y in this.indices && position.x in this[position.y].indices
