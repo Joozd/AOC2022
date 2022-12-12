@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage
  *  gifMaker.addCoordinates(someCoordinates, scale = 3){
  *  if (it.value == '#' 0xFFFFFF else 0x000000
  * }
+ * gifMaker.writeGif("filename.gif")
  */
 class GifSequenceBuilder(private val delay: Int, private val loop: Boolean) {
     private val frames = ArrayList<BufferedImage>()
