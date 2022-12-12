@@ -9,7 +9,7 @@ open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate> {
     fun south() = Coordinate(x, y+1)
     fun west() = Coordinate(x-1, y)
 
-    /*
+
     // Functions for when we get to do pathfinding or game of life
 
     fun fourNeighbors() = listOf(
@@ -19,6 +19,7 @@ open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate> {
         Coordinate(x, y+1)
     )
 
+    /*
     fun eightNeighbors() =
         (y-1..y+1).map{ y ->
             (x-1..x+1).mapNotNull { x->
