@@ -23,7 +23,7 @@ class Day14: Solution(14) {
 
     private fun countSandDropped(input: List<String>, hasFloor: Boolean = false, fileNameForImage: String? = null): Int{
         val cave = buildCave(input.distinct()) // lot of duplicate inputs, no need to do all that double work
-        val lowest = cave.keys.maxBy {it.y}.y
+        val lowest = cave.keys.maxBy {it.y}.y // could do this in Sand, but now I have to do it only once.
         val initialPos = Coordinate(500,0)
         var count = 0
         while(Sand(initialPos, cave, lowest, hasFloor).drop()){
