@@ -34,6 +34,6 @@ class Day10: Solution(10) {
 
     private fun getMessageString(signal: List<Int>) = signal.mapIndexed { index, i ->
         // screen is 0-indexed, so we can just use i-1..i+1
-        if (index%40 in i-1..i+1) '#' else ' '
+        if (index%40 in i-1..i+1) '#' else '.'
     }.chunked(40).joinToString("\n") { it.joinToString("")}
 }
