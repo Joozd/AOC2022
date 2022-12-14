@@ -24,8 +24,9 @@ class GifSequenceBuilder(private val delay: Int, private val loop: Boolean) {
         frames.add(frame)
     }
 
-    fun <T> addCoordinates(coordinates: Collection<CoordinateWithValue<T>>, scale: Int = 3, colorMaker: PNGMap.ColorMaker<T>){
+    fun <T> addCoordinates(coordinates: Collection<CoordinateWithValue<T>>, scale: Int = 3, colorMaker: PNGMap.ColorMaker<T>): GifSequenceBuilder{
         addFrame(PNGMap(coordinates, scale, colorMaker).makeBufferedImage())
+        return this
     }
 
     fun writeGif(fileName: String){

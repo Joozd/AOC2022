@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
-class PNGMap<T>(private val map: Collection<CoordinateWithValue<T>>, private val scale: Int = 5, private var definedColors: ColorMaker<T>? = null) {
+class PNGMap<T>(private val map: Collection<CoordinateWithValue<T>>, private val scale: Int = 5, private var definedColors: ColorMaker<T>? = ColorMaker { 0xFFFFFF }) {
     fun defineColors(colorMaker: ColorMaker<T>){
         definedColors = colorMaker
     }

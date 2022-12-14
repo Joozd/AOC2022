@@ -27,3 +27,10 @@ fun List<String>.findFirstPositionOrNull(value: Char): Coordinate? {
 operator fun List<String>.get(position: Coordinate) = this[position.y][position.x]
 
 operator fun List<String>.contains(position: Coordinate) = position.y in this.indices && position.x in this[position.y].indices
+
+// only works for horizontal or vertical lines
+fun Coordinate.lineTo(other: Coordinate): List<Coordinate> =
+   if (other.x != x)
+       (minOf(other.x, x)..maxOf(other.x,x)).map{ Coordinate(it, y) }
+   else
+    (minOf(other.y, y)..maxOf(other.y,y)).map{ Coordinate(x, it) }
