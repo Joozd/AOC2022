@@ -7,14 +7,22 @@ import common.grids.CoordinateWithValue
 import common.grids.imaging.PNGMap
 import common.grids.lineTo
 
+/**
+ * The naive way (dropping sand one at at time) takes about 1 ms for 1,
+ * and 55 ms (not sure where the big split comes from) for 2.
+ * Finding edges and corners and filling from there would be much faster I presume,
+ * but I didn't put in the time for that.
+ */
 class Day14: Solution(14) {
+    // this takes about 1.0ms
     override fun answer1(input: List<String>) = countSandDropped(input)
 
-
+    // this takes about 55ms
     override fun answer2(input: List<String>) = countSandDropped(input, true)
 
+
     private fun countSandDropped(input: List<String>, hasFloor: Boolean = false, fileNameForImage: String? = null): Int{
-        val cave = buildCave(input)
+        val cave = buildCave(input.distinct()) // lot of duplicate inputs, no need to do all that double work
         val lowest = cave.keys.maxBy {it.y}.y
         val initialPos = Coordinate(500,0)
         var count = 0
