@@ -1,5 +1,7 @@
 package common.grids
 
+import kotlin.math.absoluteValue
+
 /**
  * because Pairs are too confusing for Joozd
  */
@@ -18,6 +20,9 @@ open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate> {
         Coordinate(x+1, y),
         Coordinate(x, y+1)
     )
+
+    fun distanceTo(other: Coordinate): Int =
+        (other.y - y).absoluteValue + (other.x - x).absoluteValue
 
     /*
     fun eightNeighbors() =

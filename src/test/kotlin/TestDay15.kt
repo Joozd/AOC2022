@@ -17,7 +17,7 @@ class TestDay15 {
         val d = Day15()
         d.wantedLine = l1 // needed for answer1() which is needed to fill caches
         d.maxRange = 20
-        d.answer1() // fill caches
+        d.answer1(t1) // fill caches
         assertEquals<Any?>(b1, d.answer2(t1))
     }
 
@@ -38,7 +38,7 @@ class TestDay15 {
     fun benchmark2(){
         val d = Day15()
         d.answer1() // fill caches
-        val repeats = 10 // 10000
+        val repeats = 1000 // 10000
         measureNanoTime {
             repeat(repeats){
                 d.answer2()
@@ -65,5 +65,5 @@ Sensor at x=20, y=1: closest beacon is at x=15, y=3""".lines()
 
     private val l1 = 10
     private val a1 = 26
-    private val b1 = 56000011
+    private val b1 = 56000011L
 }

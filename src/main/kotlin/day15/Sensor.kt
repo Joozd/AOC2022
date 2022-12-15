@@ -4,7 +4,7 @@ import common.grids.Coordinate
 import kotlin.math.absoluteValue
 
 class Sensor(xPos: Int, yPos: Int, closestBeaconX: Int, closestBeaconY: Int): Coordinate(xPos, yPos) {
-    private val range = (xPos-closestBeaconX).absoluteValue + (yPos-closestBeaconY).absoluteValue
+    val range = distanceTo(Coordinate(closestBeaconX, closestBeaconY))
 
     fun xRangeAtY(fixedY: Int): IntRange?{
         val rangeAtLine = range - (y - fixedY).absoluteValue
