@@ -2,7 +2,7 @@ package day14
 
 import common.grids.Coordinate
 
-class Sand(private val initialPos: Coordinate, private val cave: MutableMap<Coordinate, Coordinate>, private val maxYValue: Int, private val  hasFloor: Boolean = false){
+class Sand(private val initialPos: Coordinate, private val cave: MutableSet<Coordinate>, private val maxYValue: Int, private val  hasFloor: Boolean = false){
     private val floor = maxYValue + 1
 
     var currentPos = initialPos
@@ -14,11 +14,11 @@ class Sand(private val initialPos: Coordinate, private val cave: MutableMap<Coor
             if (!hasFloor && currentPos.y > maxYValue)
                 return false
             if (hasFloor && currentPos.y == floor){
-                cave[currentPos] = DroppedSand(currentPos)
+                cave.add(currentPos)
                 return true
             }
         }
-        cave[currentPos] = DroppedSand(currentPos)
+        cave.add(currentPos)
         return true
     }
 
