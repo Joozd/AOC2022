@@ -7,12 +7,16 @@ fun Collection<Coordinate>.gridString(): String{
     val yOffset = minOf{ it.y }
     val biggestX = maxOf{ it.x - xOffSet }
     val biggestY = maxOf{ it.y - yOffset }
-    return (0..biggestY).joinToString("\n"){ y ->
-        (0..biggestX).joinToString(""){ x ->
-            if (Coordinate(x + xOffSet, y + yOffset) in this) "X" else "."
-        }
+    val lines = Array(biggestY + 1){
+        CharArray(biggestX + 1){ '.' }
     }
+    forEach {
+        lines[it.y - yOffset][it.x - xOffSet] = if (it is CoordinateWithValue<*>) it.value.toString().first() else '#'
+    }
+    return lines.joinToString("\n"){ it.joinToString("")}
 }
+
+
 
 fun List<String>.findFirstPositionOrNull(value: Char): Coordinate? {
     for (y in this.indices) {
