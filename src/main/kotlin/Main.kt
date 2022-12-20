@@ -29,7 +29,7 @@ fun main() {
             "17" -> day17.Day17().runTimed()
             "18" -> day18.Day18().runTimed()
             "19" -> day19.Day19().runTimed()
-            // "20" -> day20.Day20().runTimed()
+            "20" -> day20.Day20().runTimed()
             // "21" -> day21.Day21().runTimed()
             // "22" -> day22.Day22().runTimed()
             // "23" -> day23.Day23().runTimed()
