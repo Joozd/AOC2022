@@ -16,5 +16,5 @@ class TestDay17 {
 
     private val t1 = """>>><<><>><<<>><>>><<<>>><<<><<<>><>><<>>""".lines()
     private val a1 = 3068
-    private val b1 = 1707
+    private val b1 = 1514285714288L
 }
