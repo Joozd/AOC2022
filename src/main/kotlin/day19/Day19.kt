@@ -12,12 +12,9 @@ class Day19: Solution(19) {
         acc * maxAmountOfGeodes(recipe, 32)
     }
 
-    fun maxAmountOfGeodes(recipe: List<Int>, minutes: Int): Int{
+    private fun maxAmountOfGeodes(recipe: List<Int>, minutes: Int): Int{
         val startState = State(1,0,0,0,0,0,0,minutes)
-        return getBestResult(startState, recipe).also{
-            println("best result for recipe ${recipe[0]} = $it")
-            cache.clear()
-        }
+        return getBestResult(startState, recipe)
     }
 
 
@@ -34,43 +31,35 @@ class Day19: Solution(19) {
         fun tick() = State(oreBots, clayBots, obsidianBots, geodeBots, ore + oreBots, clay + clayBots, obsidian + obsidianBots, timeLeft - 1)
     }
 
-    private val cache = HashMap<State, Int>()
-
-    private fun getBestResult(state: State, recipe: List<Int>) =
-        cache.getOrPut(state){
-            calculateBestResult(state, recipe)
-        }
-
-    private fun calculateBestResult(state: State, recipe: List<Int>): Int {
+    private fun getBestResult(state: State, recipe: List<Int>): Int {
         if (state.timeLeft == 1) return state.geodeBots // end condition
         return (findOptions(state, recipe).maxOfOrNull{ newState -> getBestResult(newState, recipe)}?: 0) + state.geodeBots
     }
 
     private fun findOptions(state: State, recipe: List<Int>): List<State> {
-        val doNothing = state.tick()
-        val options = mutableListOf<State>() // doing nothing is always an option
+        val tick = state.tick()
+        val maxOreNeeded = maxOf(recipe[INDEX_OREBOT_COST_ORE], recipe[INDEX_CLAYBOT_COST_ORE], recipe[INDEX_OBSIDIANBOT_COST_ORE], recipe[INDEX_GEODEBOT_COST_ORE])
+        val maxClayNeeded = recipe[INDEX_OBSIDIANBOT_COST_CLAY]
+        val options = mutableListOf<State>()
 
-        if (state.ore < maxOf(recipe[INDEX_OREBOT_COST_ORE], recipe[INDEX_CLAYBOT_COST_ORE], recipe[INDEX_OBSIDIANBOT_COST_ORE], recipe[INDEX_GEODEBOT_COST_ORE]))
-            options.add(doNothing)
+        if (state.ore < maxOreNeeded)
+            options.add(tick)
 
-        if (state.ore >= recipe[INDEX_OREBOT_COST_ORE]){
-            //if(state.clayBots / state.oreBots + 1 > recipe[INDEX_OBSIDIANBOT_COST_CLAY] / recipe[INDEX_OBSIDIANBOT_COST_ORE])
-            options.add(doNothing.copy(oreBots = doNothing.oreBots + 1, ore = doNothing.ore - recipe[INDEX_OREBOT_COST_ORE]))
+        if (state.ore >= recipe[INDEX_OREBOT_COST_ORE] && state.oreBots <= maxOreNeeded){
+            options.add(tick.copy(oreBots = tick.oreBots + 1, ore = tick.ore - recipe[INDEX_OREBOT_COST_ORE]))
         }
 
-        if (state.ore >= recipe[INDEX_CLAYBOT_COST_ORE])
-            options.add(doNothing.copy(clayBots = doNothing.clayBots + 1, ore = doNothing.ore - recipe[INDEX_CLAYBOT_COST_ORE]))
+        if (state.ore >= recipe[INDEX_CLAYBOT_COST_ORE] && state.clay <= maxClayNeeded)
+            options.add(tick.copy(clayBots = tick.clayBots + 1, ore = tick.ore - recipe[INDEX_CLAYBOT_COST_ORE]))
 
 
         if (state.ore >= recipe[INDEX_OBSIDIANBOT_COST_ORE] && state.clay >= recipe[INDEX_OBSIDIANBOT_COST_CLAY]){
-            if (state.timeLeft < 15) options.clear() // force build obsidian if able, but only in the last 15 turns. This is a bit "wet finger work" but it works for my input. If it doesn't I'd have to do something smarter here but turns out I don't
-            options.add(doNothing.copy(obsidianBots = doNothing.obsidianBots + 1, ore = doNothing.ore - recipe[INDEX_OBSIDIANBOT_COST_ORE], clay = doNothing.clay - recipe[INDEX_OBSIDIANBOT_COST_CLAY]))
+            options.add(tick.copy(obsidianBots = tick.obsidianBots + 1, ore = tick.ore - recipe[INDEX_OBSIDIANBOT_COST_ORE], clay = tick.clay - recipe[INDEX_OBSIDIANBOT_COST_CLAY]))
         }
 
         if (state.ore >= recipe[INDEX_GEODEBOT_COST_ORE] && state.obsidian >= recipe[INDEX_GEODEBOT_COST_OBSIDIAN]){
             options.clear() // force build geodebots when able
-            options.add(doNothing.copy(geodeBots = doNothing.geodeBots + 1, ore = doNothing.ore - recipe[INDEX_GEODEBOT_COST_ORE], obsidian = doNothing.obsidian - recipe[INDEX_GEODEBOT_COST_OBSIDIAN]))
-            // .also{println("Can build geodebot from $state")}
+            options.add(tick.copy(geodeBots = tick.geodeBots + 1, ore = tick.ore - recipe[INDEX_GEODEBOT_COST_ORE], obsidian = tick.obsidian - recipe[INDEX_GEODEBOT_COST_OBSIDIAN]))
         }
 
         return options
