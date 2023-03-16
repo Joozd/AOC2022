@@ -12,4 +12,8 @@ class Vector(val directionX: Int, val directionY: Int): Comparable<Vector> {
 
     override fun hashCode(): Int =
         directionX.shl(16) + directionY
+
+    override fun toString() = "Vector ($directionX,$directionY)"
+
+    val reverse get() = Vector(directionX * -1, directionY * -1)
 }

@@ -2,13 +2,13 @@ package common.grids
 
 
 //this removes any offsets (positive or negative) so result always touches 0 axes
-fun Collection<Coordinate>.gridString(): String{
+fun Collection<Coordinate>.gridString(empty: Char = '.'): String{
     val xOffSet = minOf{ it.x }
     val yOffset = minOf{ it.y }
     val biggestX = maxOf{ it.x - xOffSet }
     val biggestY = maxOf{ it.y - yOffset }
     val lines = Array(biggestY + 1){
-        CharArray(biggestX + 1){ '.' }
+        CharArray(biggestX + 1){ empty }
     }
     forEach {
         lines[it.y - yOffset][it.x - xOffSet] = if (it is CoordinateWithValue<*>) it.value.toString().first() else '#'
