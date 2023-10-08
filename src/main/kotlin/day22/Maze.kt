@@ -3,8 +3,7 @@ package day22
 import common.grids.Coordinate
 
 class Maze(private val mazeInput: List<String>) {
-    var currentPos = Coordinate(mazeInput[0].indexOfFirst { it == '.' }, 0)
-        private set
+    private var currentPos = Coordinate(mazeInput[0].indexOfFirst { it == '.' }, 0)
 
     fun turn(direction: Char){
         currentDirection = if (direction == 'L') currentDirection.left else currentDirection.right
@@ -21,19 +20,17 @@ class Maze(private val mazeInput: List<String>) {
         }
     }
 
-    var currentDirection: Directions = Directions.RIGHT
-        private set
+    private var currentDirection: Direction = Direction.RIGHT
 
     fun calculateValue(): Int =
         (currentPos.y + 1) * 1000 +
-                (currentPos.x + 1) * 4 +
-                when(currentDirection){
-                    Directions.RIGHT -> 0
-                    Directions.DOWN -> 1
-                    Directions.LEFT -> 2
-                    Directions.UP -> 3
-                }
-
+        (currentPos.x + 1) * 4 +
+        when(currentDirection){
+            Direction.RIGHT -> 0
+            Direction.DOWN -> 1
+            Direction.LEFT -> 2
+            Direction.UP -> 3
+        }
 
     private fun valueOfPos(pos: Coordinate) = mazeInput.getOrNull(pos.y)?.getOrNull(pos.x)
 

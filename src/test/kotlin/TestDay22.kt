@@ -9,15 +9,13 @@ class TestDay22 {
         assertEquals<Any?>(a1, d.answer1(t1))
     }
 
-/*
     @Test
     fun test2() {
-        d.answer1(t1) // fill cache
-        assertEquals<Any?>(b1, d.answer2(t1))
+        assertEquals<Any?>(a2, d.answer2(t1))
     }
-*/
 
-    private val t1 = """        ...#
+    private val t1 = """
+        ...#
         .#..
         #...
         ....
@@ -30,7 +28,7 @@ class TestDay22 {
         .#......
         ......#.
 
-10R5L5R10L4R5L5""".lines()
+10R5L5R10L4R5L5""".lines().drop(1) // first line is empty for readability
     private val a1 = 6032
-    // private val b1 = 0
+    private val a2 = 5031
 }
