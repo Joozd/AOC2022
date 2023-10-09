@@ -1,11 +1,15 @@
 package common.grids
 
+import common.linearalgebra.IntVector
 import kotlin.math.absoluteValue
 
 /**
  * because Pairs are too confusing for Joozd
  */
-open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate> {
+open class Coordinate(x: Int, y: Int): Comparable<Coordinate>, IntVector(x,y) {
+    constructor(v: IntVector): this(v[0], v[1])
+    val x get() = vector[0]
+    val y get() = vector[1]
     open fun north() = Coordinate(x, y-1)
     open fun east() = Coordinate(x+1, y)
     open fun south() = Coordinate(x, y+1)

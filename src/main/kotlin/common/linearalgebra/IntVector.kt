@@ -3,10 +3,10 @@ package common.linearalgebra
 /**
  * IntVectors are immutable.
  */
-class IntVector(vararg x: Int): Iterable<Int> {
+open class IntVector(vararg x: Int): Iterable<Int> {
     constructor(x: List<Int>): this(*x.toIntArray())
 
-    private val vector: IntArray = x
+    protected val vector: IntArray = x
 
     val size get() = vector.size
 
@@ -67,4 +67,18 @@ class IntVector(vararg x: Int): Iterable<Int> {
     override fun iterator(): Iterator<Int> = vector.iterator()
 
     override fun toString(): String = "[${vector.joinToString()}]"
+
+    companion object{
+        // helpers for 2d grids
+        val NORTH = IntVector(0,-1)
+        val EAST  = IntVector(1,0)
+        val SOUTH = IntVector(0,1)
+        val WEST  = IntVector(-1,0)
+
+        val NW = NORTH + WEST
+        val NE = NORTH + EAST
+        val SE = SOUTH + EAST
+        val SW = SOUTH + WEST
+
+    }
 }
