@@ -40,7 +40,7 @@ abstract class Solution(private val day: Int) {
         inputLines  // initialized lazy, this also initializes inputLines as that is called from the lazy init.
     }
 
-    private  fun inputLines() = readInput().lines()
+    private fun inputLines() = readInput().lines()
 
     // private because no protection from ambiguos newLines.
     // use [inputFile] or [inputLines]
